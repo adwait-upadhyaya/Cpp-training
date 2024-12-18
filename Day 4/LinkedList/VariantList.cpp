@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include <memory>
 
 enum class DATATYPE
 {
@@ -115,11 +116,20 @@ std::ostream &operator<<(std::ostream &stream, const VariantList &vl)
 
 int main()
 {
-    VariantList vl;
-    vl.insert(12);
-    vl.insert("Hello");
-    vl.insert(false);
-    vl.insert(10.25);
-    std::cout << vl << std::endl;
+    std::shared_ptr<VariantList> vl2(new VariantList);
+    std::shared_ptr<VariantList> vl(vl2);
+    auto vl3 = vl;
+
+    vl2->insert(12);
+    vl->insert("Hello");
+    vl->insert(false);
+    vl->insert(10.25);
+    vl3->insert(true);
+
+    std::cout << "List 1 " << *vl << std::endl;
+    std::cout << "List 2 " << *vl2 << std::endl;
+    std::cout << "ref count of first shared ptr: " << vl.use_count() << std::endl;
+    std::cout << "ref count of second shared ptr: " << vl2.use_count() << std::endl;
+    std::cout << "ref count of second shared ptr: " << vl2.use_count() << std::endl;
     return 0;
 }

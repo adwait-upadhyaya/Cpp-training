@@ -1,6 +1,6 @@
 #include <iostream>
 
-template <typename T>
+template <typename _Tp>
 class SharedPointer
 {
 public:
@@ -8,7 +8,7 @@ public:
     template <typename Tu>
     friend std::ostream &operator<<(std::ostream &os, const SharedPointer<Tu> &pointer);
     // Constructor
-    SharedPointer(T *val)
+    SharedPointer(_Tp *val)
     {
         value = val;
 
@@ -44,7 +44,7 @@ public:
     }
 
 private:
-    T *value;
+    _Tp *value;
     int *refCount;
 };
 
